@@ -1,0 +1,180 @@
+{
+  "docentes": [
+    {
+      "id": "1",
+      "nombre": "Juan Perez",
+      "identificacion": "123456789",
+      "email": "juan@cesde.edu.co"
+    },
+    {
+      "id": "2",
+      "nombre": "Maria Gomez",
+      "identificacion": "987654321",
+      "email": "maria@cesde.edu.co"
+    },
+    {
+      "id": "3",
+      "nombre": "Carlos Ruiz",
+      "identificacion": "456123789",
+      "email": "carlos@cesde.edu.co"
+    },
+    {
+      "id": "4",
+      "nombre": "Ana Torres",
+      "identificacion": "741852963",
+      "email": "ana@cesde.edu.co"
+    },
+    {
+      "id": "5",
+      "nombre": "Luis Mendoza",
+      "identificacion": "159357486",
+      "email": "luis@cesde.edu.co"
+    },
+    {
+      "id": "6",
+      "nombre": "Laura Castillo",
+      "identificacion": "258369147",
+      "email": "laura@cesde.edu.co"
+    },
+    {
+      "id": "7",
+      "nombre": "Andres Molina",
+      "identificacion": "369258147",
+      "email": "andres@cesde.edu.co"
+    },
+    {
+      "id": "8",
+      "nombre": "Sofia Ramirez",
+      "identificacion": "147258369",
+      "email": "sofia@cesde.edu.co"
+    },
+    {
+      "id": "9",
+      "nombre": "Diego Herrera",
+      "identificacion": "852963741",
+      "email": "diego@cesde.edu.co"
+    },
+    {
+      "id": "10",
+      "nombre": "Paula Ortiz",
+      "identificacion": "951753852",
+      "email": "paula@cesde.edu.co"
+    },
+    {
+      "id": "11",
+      "nombre": "Fernando López",
+      "identificacion": "753159852",
+      "email": "fernando@cesde.edu.co"
+    }
+  ],
+  "cursos": [
+    {
+      "id": "1",
+      "nombre": "Java Backend",
+      "descripcion": "Spring Boot desde cero",
+      "semanas": 8,
+      "precio": 1200000,
+      "fechaInicio": "2024-03-10T08:00",
+      "docenteId": 1
+    },
+    {
+      "id": "2",
+      "nombre": "Frontend con React",
+      "descripcion": "React y Hooks",
+      "semanas": 6,
+      "precio": 1000000,
+      "fechaInicio": "2024-04-01T08:00",
+      "docenteId": 2
+    },
+    {
+      "id": "3",
+      "nombre": "Base de Datos",
+      "descripcion": "PostgreSQL desde cero",
+      "semanas": 5,
+      "precio": 800000,
+      "fechaInicio": "2024-04-15T08:00",
+      "docenteId": 3
+    },
+    {
+      "id": "4",
+      "nombre": "APIs REST",
+      "descripcion": "Diseño y buenas prácticas",
+      "semanas": 4,
+      "precio": 750000,
+      "fechaInicio": "2024-05-01T08:00",
+      "docenteId": 4
+    },
+    {
+      "id": "5",
+      "nombre": "Microservicios",
+      "descripcion": "Arquitectura con Spring Cloud",
+      "semanas": 7,
+      "precio": 1300000,
+      "fechaInicio": "2024-05-20T08:00",
+      "docenteId": 5
+    },
+    {
+      "id": "6",
+      "nombre": "Git y GitHub",
+      "descripcion": "Control de versiones",
+      "semanas": 3,
+      "precio": 500000,
+      "fechaInicio": "2024-06-01T08:00",
+      "docenteId": 6
+    },
+    {
+      "id": "7",
+      "nombre": "Testing en Java",
+      "descripcion": "JUnit y Mockito",
+      "semanas": 4,
+      "precio": 700000,
+      "fechaInicio": "2024-06-15T08:00",
+      "docenteId": 7
+    },
+    {
+      "id": "8",
+      "nombre": "Docker",
+      "descripcion": "Contenedores para desarrolladores",
+      "semanas": 4,
+      "precio": 750000,
+      "fechaInicio": "2024-07-01T08:00",
+      "docenteId": 8
+    },
+    {
+      "id": "9",
+      "nombre": "Seguridad en Aplicaciones",
+      "descripcion": "JWT y OAuth2",
+      "semanas": 5,
+      "precio": 900000,
+      "fechaInicio": "2024-07-15T08:00",
+      "docenteId": 9
+    },
+    {
+      "id": "10",
+      "nombre": "Desarrollo Full Stack",
+      "descripcion": "React y Spring Boot",
+      "semanas": 10,
+      "precio": 1800000,
+      "fechaInicio": "2024-08-01T08:00",
+      "docenteId": 10
+    },
+    {
+      "id": "11",
+      "nombre": "DevOps Básico",
+      "descripcion": "CI/CD y automatización",
+      "semanas": 6,
+      "precio": 1100000,
+      "fechaInicio": "2024-08-20T08:00",
+      "docenteId": 11
+    },
+    {
+      "id": "12",
+      "nombre": "Arquitectura de Software",
+      "descripcion": "Patrones de diseño y buenas prácticas",
+      "semanas": 6,
+      "precio": 1150000,
+      "fechaInicio": "2024-09-10T08:00",
+      "docenteId": 3
+    }
+  ]
+}

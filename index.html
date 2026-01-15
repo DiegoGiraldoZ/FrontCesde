@@ -1,10 +1,233 @@
 <html lang="es">
+
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CesdeApp</title>
+    <title>Cursos Cesde</title>
+    <style>
+        .range-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #1e3a8a;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        .range-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            background: #1e3a8a;
+            cursor: pointer;
+            border-radius: 50%;
+            border: none;
+        }
+    </style>
 </head>
-<body>
+
+<body class="bg-gray-50 min-h-screen">
+  
+    <header class="bg-[#E71D73] border-b border-gray-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-bold text-white">Cursos Cesde</h1>
+                    <p class="text-white mt-1 text-sm sm:text-base">Oferta de cursos</p>
+                </div>
+                <button id="btn-agregar-curso" class="bg-blue-900 hover:bg-blue-950 text-white font-medium px-4 py-2.5 rounded-lg transition-colors whitespace-nowrap">
+                    + Agregar Curso
+                </button>
+            </div>
+        </div>
+    </header>
+
+   
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     
+        <div class="mb-6">
+            <input id="buscador" 
+                   class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent shadow-sm" 
+                   placeholder="Buscar curso por nombre...">
+        </div>
+
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5 mb-8">
+            <h2 class="text-base font-semibold text-gray-900 mb-4">Filtros de búsqueda</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="sm:col-span-2 lg:col-span-1">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Precio máximo
+                    </label>
+                    <div class="mb-1">
+                        <span id="precio-valor" class="text-sm font-semibold text-blue-900">$2,000,000</span>
+                    </div>
+                    <input id="filtro-precio" 
+                           type="range" 
+                           min="500000" 
+                           max="2000000" 
+                           step="100000" 
+                           value="2000000" 
+                           class="w-full range-slider h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                    <div class="flex justify-between text-xs text-gray-500 mt-1">
+                        <span>$500K</span>
+                        <span>$2M</span>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Duración (semanas)
+                    </label>
+                    <select id="filtro-duracion" 
+                            class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent">
+                        <option value="todas">Todas las duraciones</option>
+                        <option value="1-4">1-4 semanas</option>
+                        <option value="5-7">5-7 semanas</option>
+                        <option value="8-12">8+ semanas</option>
+                    </select>
+                </div>
+                <div class="flex items-end sm:col-span-2 lg:col-span-1">
+                    <button id="limpiar-filtros" 
+                            class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium px-4 py-2.5 rounded-lg transition-colors border border-gray-300">
+                        Limpiar filtros
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="cursos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"></div>
+    </main>
+
+    <div id="modal-curso" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white w-full max-w-lg rounded-lg shadow-xl relative">
+            <button id="cerrar-modal-curso" 
+                    class="absolute right-4 top-4 text-gray-400 hover:text-gray-600 text-2xl font-light w-9 h-9 flex items-center justify-center rounded hover:bg-gray-100 transition">
+                &times;
+            </button>
+
+            <div class="p-6">
+                <h2 id="titulo-modal" class="text-2xl font-bold text-gray-900 mb-3 pr-8"></h2>
+                <p id="modal-descripcion" class="text-gray-600 text-base leading-relaxed mb-6"></p>
+
+                <div class="space-y-3 mb-6 border-t border-b border-gray-200 py-4">
+                    <div class="flex justify-between">
+                        <span class="text-sm text-gray-600">Duración</span>
+                        <span class="font-semibold text-gray-900"><span id="semanas-modal"></span> semanas</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-sm text-gray-600">Fecha de inicio</span>
+                        <span id="fecha-modal" class="font-semibold text-gray-900"></span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-600">Docente</span>
+                        <div>
+                            <span id="docente-nombre" class="font-semibold text-gray-900"></span>
+                            <button id="abrir-modal-docente" 
+                                    class="text-blue-900 hover:text-blue-950 underline text-sm font-medium ml-2">
+                                Contactar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-700 font-medium">Precio</span>
+                    <span class="text-2xl font-bold text-blue-900">$<span id="precio-modal"></span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="docente-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white w-full max-w-md rounded-lg shadow-xl relative">
+            <button id="cerrar-modal-docente" 
+                    class="absolute right-4 top-4 text-gray-400 hover:text-gray-600 text-2xl font-light w-9 h-9 flex items-center justify-center rounded hover:bg-gray-100 transition">
+                &times;
+            </button>
+
+            <div class="p-6">
+                <h3 id="nombre-docente" class="text-xl font-bold text-gray-900 mb-5 pr-8">Información del docente</h3>
+
+                <div class="space-y-4">
+                    <div class="border-l-4 border-blue-900 bg-gray-50 rounded-r px-4 py-3">
+                        <div class="text-xs font-medium text-gray-500 mb-1">Documento de identidad</div>
+                        <div id="documento-docente" class="font-semibold text-gray-900"></div>
+                    </div>
+                    <div class="border-l-4 border-blue-900 bg-gray-50 rounded-r px-4 py-3">
+                        <div class="text-xs font-medium text-gray-500 mb-1">Correo electrónico</div>
+                        <a id="email-docente" href="#" class="font-semibold text-blue-900 hover:text-blue-950 break-all"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-form-curso" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white w-full max-w-2xl rounded-lg shadow-xl relative max-h-[90vh] overflow-y-auto">
+            <button id="cerrar-modal-form" 
+                    class="absolute right-4 top-4 text-gray-400 hover:text-gray-600 text-2xl font-light w-9 h-9 flex items-center justify-center rounded hover:bg-gray-100 transition">
+                &times;
+            </button>
+
+            <div class="p-6">
+                <h3 id="titulo-form-curso" class="text-2xl font-bold text-gray-900 mb-6 pr-8">Agregar Curso</h3>
+
+                <form id="form-curso" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Nombre del curso *</label>
+                        <input type="text" id="input-nombre" required minlength="3" maxlength="100"
+                               class="w-full border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Descripción *</label>
+                        <textarea id="input-descripcion" required minlength="10" maxlength="500" rows="3"
+                                  class="w-full border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent"></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Semanas *</label>
+                            <input type="number" id="input-semanas" required min="1" max="52"
+                                   class="w-full border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Precio *</label>
+                            <input type="number" id="input-precio" required min="0" step="1000"
+                                   class="w-full border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Fecha de inicio *</label>
+                            <input type="datetime-local" id="input-fecha" required
+                                   class="w-full border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Docente *</label>
+                            <select id="input-docente" required
+                                    class="w-full border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent">
+                                <option value="">Seleccione un docente</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3 pt-4">
+                        <button type="submit" class="flex-1 bg-blue-900 hover:bg-blue-950 text-white font-medium py-2.5 px-4 rounded-lg transition-colors">
+                            Guardar
+                        </button>
+                        <button type="button" id="btn-cancelar-form" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2.5 px-4 rounded-lg transition-colors border border-gray-300">
+                            Cancelar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="./js/app.js" type="module"></script>
 </body>
+
 </html>
